@@ -2,6 +2,23 @@
 
 comentarios = []
 
+
+# Funcion para procesar un comentario y generar una tupla
+def procesar_comentario(comentario):
+    comentario = comentario.strip()
+
+    cantidad_caracteres = len(comentario)
+    cantidad_palabras = len(comentario.split())
+
+    resumen = (
+        comentario,
+        cantidad_caracteres,
+        cantidad_palabras
+    )
+
+    return resumen
+
+
 # Funcion para registrar un comentario
 def registrar_comentario():
     comentario = input("Escriba el comentario del estudiante: ")
@@ -9,53 +26,73 @@ def registrar_comentario():
 
     if comentario == "":
         print("El comentario no puede estar vacio.")
-    else:
-        comentarios.append(comentario)
-        print("Comentario registrado correctamente.")
+        return
+
+    resumen = procesar_comentario(comentario)
+    comentarios.append(resumen)
+
+    print("Comentario registrado correctamente.")
 
 
 # Funcion para mostrar todos los comentarios
 def mostrar_comentarios():
     if len(comentarios) == 0:
         print("Todavia no hay comentarios registrados.")
-    else:
-        print("\n--- COMENTARIOS REGISTRADOS ---")
-        for i in range(len(comentarios)):
-            print(i + 1, ".", comentarios[i])
+        return
 
-# Punto 3: Buscar comentarios que contengan una palabra indicada
-def buscar_comentarios(comentarios):
-    palabra = input("Ingrese la palabra que desea buscar: ").strip().lower()
+    print("\n--- COMENTARIOS REGISTRADOS ---")
 
-    encontrados = [
-        (i, comentario)
-        for i, comentario in enumerate(comentarios, start=1)
-        if palabra in comentario.lower().split()
-    ]
+    for i, resumen in enumerate(comentarios, start=1):
+        print(f"{i}. {resumen[0]}")
 
-    if encontrados:
-        print("\nComentarios encontrados:")
-        for numero, comentario in encontrados:
-            print(f"{numero}. {comentario}")
+
+# Funcion para buscar comentarios por una palabra
+def buscar_comentarios():
+    if len(comentarios) == 0:
+        print("Todavia no hay comentarios registrados.")
+        return
+
+    palabra = input("Ingrese la palabra que desea buscar: ")
+    palabra = palabra.strip().lower()
+
+    if palabra == "":
+        print("La palabra no puede estar vacia.")
+        return
+
+    encontrados = 0
+
+    for i, resumen in enumerate(comentarios, start=1):
+        comentario = resumen[0]
+        palabras = comentario.lower().split()
+
+        if palabra in palabras:
+            print(f"{i}. {comentario}")
+            encontrados += 1
+
+    if encontrados > 0:
+        print("Busqueda exitosa.")
+        print("Cantidad de comentarios encontrados:", encontrados)
     else:
         print("No se encontraron comentarios con esa palabra.")
 
 
-# Punto 4: Mostrar la cantidad de palabras de cada comentario
-def contar_palabras(comentarios):
-    if not comentarios:
-        print("No hay comentarios registrados.")
+# Funcion para mostrar la cantidad de palabras
+# de cada comentario
+def contar_palabras():
+    if len(comentarios) == 0:
+        print("Todavia no hay comentarios registrados.")
         return
 
-    print("\nCantidad de palabras por comentario:")
-    for numero, comentario in enumerate(comentarios, start=1):
-        cantidad = len(comentario.split())
-        print(f"Comentario {numero}: {cantidad} palabras")
+    print("\n--- CANTIDAD DE PALABRAS ---")
+
+    for i, resumen in enumerate(comentarios, start=1):
+        print(f"Comentario {i}: {resumen[2]} palabras")
+
 
 # Funcion para seleccionar un comentario
-def seleccionar_comentario(comentarios):
+def seleccionar_comentario():
     if len(comentarios) == 0:
-        print("No hay comentarios registrados.")
+        print("Todavia no hay comentarios registrados.")
         return None
 
     mostrar_comentarios()
@@ -74,37 +111,46 @@ def seleccionar_comentario(comentarios):
         return None
 
 
-# Punto 5: Contar las apariciones de una palabra
-# en un comentario seleccionado
-def contar_apariciones(comentarios):
-    comentario = seleccionar_comentario(comentarios)
+# Funcion para contar las apariciones de una palabra
+def contar_apariciones():
+    resumen = seleccionar_comentario()
 
-    if comentario is None:
+    if resumen is None:
         return
 
-    palabra = input("Ingrese la palabra que desea contar: ").strip().lower()
+    comentario = resumen[0]
+    palabra = input("Ingrese la palabra que desea contar: ")
+    palabra = palabra.strip().lower()
 
     if palabra == "":
         print("La palabra no puede estar vacia.")
         return
 
-    cantidad = comentario.lower().split().count(palabra)
+    palabras = comentario.lower().split()
+    cantidad = palabras.count(palabra)
 
     print("\n--- RESULTADO DE LA BUSQUEDA ---")
     print("Comentario:", comentario)
     print("Palabra buscada:", palabra)
     print("Cantidad de apariciones:", cantidad)
 
+    if cantidad > 0:
+        print("Busqueda exitosa.")
+    else:
+        print("La palabra no aparece en el comentario.")
 
-# Punto 6: Mostrar el resumen de un comentario
-# y almacenarlo en una tupla
-def mostrar_resumen(comentarios):
-    comentario = seleccionar_comentario(comentarios)
 
-    if comentario is None:
+# Funcion para mostrar el resumen de un comentario
+def mostrar_resumen():
+    resumen_original = seleccionar_comentario()
+
+    if resumen_original is None:
         return
 
-    palabra = input("Ingrese la palabra que desea buscar: ").strip().lower()
+    comentario = resumen_original[0]
+
+    palabra = input("Ingrese la palabra que desea buscar: ")
+    palabra = palabra.strip().lower()
 
     if palabra == "":
         print("La palabra no puede estar vacia.")
@@ -114,6 +160,7 @@ def mostrar_resumen(comentarios):
     cantidad_palabras = len(comentario.split())
     cantidad_apariciones = comentario.lower().split().count(palabra)
 
+    # Tupla con la informacion del comentario
     resumen = (
         cantidad_caracteres,
         cantidad_palabras,
@@ -127,6 +174,11 @@ def mostrar_resumen(comentarios):
     print("Numero de palabras:", resumen[1])
     print("Apariciones de la palabra:", resumen[2])
     print("Tupla de resumen:", resumen)
+
+    if cantidad_apariciones > 0:
+        print("Busqueda exitosa.")
+    else:
+        print("No se encontraron apariciones de esa palabra.")
 
 
 # Menu principal del programa
@@ -152,16 +204,16 @@ def menu_principal():
             mostrar_comentarios()
 
         elif opcion == "3":
-            buscar_comentarios(comentarios)
+            buscar_comentarios()
 
         elif opcion == "4":
-            contar_palabras(comentarios)
+            contar_palabras()
 
         elif opcion == "5":
-            contar_apariciones(comentarios)
+            contar_apariciones()
 
         elif opcion == "6":
-            mostrar_resumen(comentarios)
+            mostrar_resumen()
 
         elif opcion == "7":
             print("Gracias por utilizar el analizador de comentarios.")
