@@ -21,4 +21,5 @@ RESPUESTAS
 El número de elementos cambia, Si necesitas ir guardando palabras una a una a medida que las vas encontrando en un texto (usando .append()) o necesitas limpiar o transformar los datos, Si planeas eliminar conectores (como "de", "del", "la"), ordenar las palabras alfabéticamente o corregir errores en los elementos procesados.
 
 Descripcion: Proycto para analizar palabras.
-   [Imagenes](https://github.com/Midnight-CEO/Palabras/tree/main/Fotosgithub_taller_6)
+
+[Imagenes](https://github.com/Midnight-CEO/Palabras/tree/main/Fotosgithub_taller_6)
