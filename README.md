@@ -19,3 +19,6 @@ RESPUESTAS
  Si resumen es una tupla (o una cadena), Python lanzará un TypeError: 'tuple'. Esto ocurre porque las tuplas son inmutables y no permiten reasignar sus elementos. Si resumen es una lista, la operación se ejecutará bien y el primer elemento de la lista cambiará su valor original por el número 100.
 5. En cuando hay que manipular texto o procesar datos, una lista es más conveniente cuando:
 El número de elementos cambia, Si necesitas ir guardando palabras una a una a medida que las vas encontrando en un texto (usando .append()) o necesitas limpiar o transformar los datos, Si planeas eliminar conectores (como "de", "del", "la"), ordenar las palabras alfabéticamente o corregir errores en los elementos procesados.
+
+Descripcion: Proycto para analizar palabras.
+   [Imagenes](https://github.com/Midnight-CEO/Palabras/tree/main/Fotosgithub_taller_6)
